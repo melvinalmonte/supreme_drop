@@ -22,7 +22,7 @@ Activate environment
 
 for Linux and MacOS:
 ```
-$ Source .venv/bin/activate
+$ source .venv/bin/activate
 ```
 for Windows:
 ```
