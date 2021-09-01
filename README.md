@@ -46,7 +46,9 @@ $ python index.py
 ## Example output:
 Expected response:
 ```
-Latest drop info: Supreme®/New York Yankees™. 09/02/2021
+___________________________________________________________
+Collab: Supreme®/New York Yankees™.  
+Drop Date: 09/02/2021
 ```
 
 ## Built With
