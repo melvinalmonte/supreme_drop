@@ -1,5 +1,6 @@
 import instaloader
 import re
+import datetime
 
 
 def has_drop_date(string):
@@ -16,13 +17,15 @@ def has_drop_date(string):
 def format_drop_info(string):
     try:
         collab = re.split('\d{2}/\d{2}/\d{4}', string)[0]
-        drop_date = re.findall('\d{2}/\d{2}/\d{4}', string)[0]
-        drop_info = f'Collab: {collab} \nDrop Date: {drop_date}'
-        print('_' * len(drop_info))
-        return drop_info
+        drop_date = re.search('\d{2}/\d{2}/\d{4}', string).group(0)
+        return [collab, drop_date]
 
     except Exception as e:
         print(f'Error formatting drop info: {e}')
+
+
+def drop_has_happened(drop_date):
+    return datetime.datetime.strptime(drop_date, '%m/%d/%Y') < datetime.datetime.now()
 
 
 def check_drop_date():
@@ -43,7 +46,16 @@ def check_drop_date():
         print('Checking for latest drop...')
         for post in posts:
             if has_drop_date(post.caption):
-                print(format_drop_info(post.caption))
+                collab, drop_date = format_drop_info(post.caption)
+                if drop_has_happened(drop_date):
+                    print('-' * len(collab))
+                    print(
+                        f'No drop has been scheduled for this week\nPrevious drop:\nCollab: {collab} \nDrop Date: {drop_date}')
+                    print('-' * len(collab))
+                else:
+                    print('-' * len(collab))
+                    print(f'Collab: {collab} \nDrop Date: {drop_date}')
+                    print('-' * len(collab))
                 break
     except Exception as e:
         print(f'Error extracting latest drop: {e}')
